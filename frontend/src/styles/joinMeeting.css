@@ -1,0 +1,66 @@
+.join-container {
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background: #0f172a;
+}
+
+.join-card {
+    width: 400px;
+
+    background: #1e293b;
+
+    padding: 40px;
+
+    border-radius: 12px;
+
+    text-align: center;
+
+    color: white;
+}
+
+.join-card h1 {
+    margin-bottom: 25px;
+}
+
+.join-input {
+    width: 100%;
+
+    padding: 14px;
+
+    border: none;
+    border-radius: 8px;
+
+    margin-bottom: 20px;
+
+    background: #334155;
+
+    color: white;
+
+    box-sizing: border-box;
+}
+
+.join-btn {
+    width: 100%;
+
+    padding: 14px;
+
+    border: none;
+
+    border-radius: 8px;
+
+    background: #2563eb;
+
+    color: white;
+
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+.join-btn:hover {
+    background: #1d4ed8;
+}

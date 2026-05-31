@@ -1,0 +1,57 @@
+.controlBar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    gap: 16px;
+    padding: 16px;
+
+    background: #111;
+    z-index: 1000;
+
+    flex-wrap: wrap; /* ✅ prevents overflow */
+}
+
+/* ================= BUTTON ================= */
+.controlButton {
+    background: white !important;
+    border-radius: 8px;
+    padding: 8px 12px;
+}
+
+/* ================= LEAVE BUTTON ================= */
+.leaveButton {
+    background: red !important;
+    color: white !important;
+}
+
+/* ================= TABLET ================= */
+@media (max-width: 768px) {
+
+    .controlBar {
+        gap: 10px;
+        padding: 10px;
+    }
+
+    .controlButton {
+        transform: scale(0.9);
+    }
+}
+
+/* ================= MOBILE ================= */
+@media (max-width: 480px) {
+
+    .controlBar {
+        gap: 8px;
+        padding: 8px;
+    }
+
+    .controlButton {
+        transform: scale(0.85);
+    }
+}

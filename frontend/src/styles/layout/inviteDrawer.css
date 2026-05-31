@@ -1,0 +1,24 @@
+.inviteDrawer {
+    width: 320px;
+
+    padding: 20px;
+
+    display: flex;
+    flex-direction: column;
+
+    gap: 15px;
+}
+
+.inviteLabel {
+    font-weight: bold;
+}
+
+.inviteValue {
+    background: #f1f5f9;
+
+    padding: 10px;
+
+    border-radius: 6px;
+
+    word-break: break-word;
+}

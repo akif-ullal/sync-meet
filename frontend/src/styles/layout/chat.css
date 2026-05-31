@@ -1,0 +1,29 @@
+.chatDrawerBox {
+    width: 300px;
+    padding: 16px;
+}
+
+.chatTitle {
+    font-weight: 600;
+}
+
+.chatMessagesBox {
+    height: 70vh;
+    overflow-y: auto;
+    margin-top: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.chatMessage {
+    font-size: 14px;
+}
+
+.chatInput {
+    margin-top: 16px;
+}
+
+.chatButton {
+    margin-top: 16px;
+}

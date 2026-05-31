@@ -1,0 +1,13 @@
+.remoteVideosContainer {
+    margin-top: 30px;
+}
+
+.remoteVideosTitle {
+    margin-bottom: 20px;
+}
+
+.remoteVideosGrid {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}

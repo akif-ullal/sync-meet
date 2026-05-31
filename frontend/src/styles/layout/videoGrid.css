@@ -1,0 +1,236 @@
+
+/* ================= WRAPPER ================= */
+
+.videoWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    padding-bottom: 100px;
+    background: #111827;
+    min-height: 100vh;
+    box-sizing: border-box;
+}
+
+/* ================= LOCAL BLOCK ================= */
+
+.localBlock {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* IMPORTANT FIX: REMOVE 50% WIDTH LIMIT */
+.localCard {
+    width: 100%;
+    max-width: 900px;
+    overflow: hidden;
+    border-radius: 16px !important;
+    background: #1f2937 !important;
+}
+
+/* VIDEO FIX */
+.localVideo {
+    width: 100%;
+    height: auto;
+    max-height: 55vh;
+    object-fit: contain;
+    background: black;
+    display: block;
+}
+
+/* ================= REMOTE USERS ================= */
+
+.remoteRow {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    justify-content: center;
+}
+
+.remoteItem {
+    width: 260px;
+}
+
+.videoCard {
+    overflow: hidden;
+    border-radius: 14px !important;
+    background: #000000 !important;
+}
+
+/* ================= HEADER ================= */
+
+.videoHeader {
+    padding: 8px 12px;
+    background: rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.videoUsername {
+    color: white;
+    font-size: 14px !important;
+    font-weight: 600 !important;
+}
+
+/* ================= SCREEN SHARE ================= */
+
+.screenShareBlock {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.screenShareCard {
+    width: 90%;
+    max-width: 1200px;
+    overflow: hidden;
+    border-radius: 16px !important;
+    background: #1f2937 !important;
+}
+
+.screenShareVideo {
+    width: 100%;
+    height: auto;
+    max-height: 70vh;
+    object-fit: contain;
+    background: black;
+    display: block;
+}
+
+/* ================= SMALL SELF VIDEO ================= */
+
+.smallSelfVideo {
+    position: fixed;
+    top: 90px;
+    right: 20px;
+    z-index: 1000;
+}
+
+.smallSelfCard {
+    width: 220px;
+    overflow: hidden;
+    border-radius: 14px !important;
+    background: #1f2937 !important;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+}
+
+.smallVideo {
+    width: 100%;
+    height: 140px;
+    object-fit: cover;
+    background: black;
+    display: block;
+}
+
+/* ================= GLOBAL VIDEO ================= */
+
+video {
+    display: block;
+    width: 100%;
+    background: black;
+}
+
+/* ================= TABLET ================= */
+
+@media (max-width: 1024px) {
+
+    .localCard {
+        width: 90%;
+    }
+
+    .screenShareCard {
+        width: 95%;
+    }
+
+    .remoteItem {
+        width: 220px;
+    }
+}
+
+/* ================= MOBILE ================= */
+
+@media (max-width: 768px) {
+
+    .videoWrapper {
+        padding: 10px;
+        padding-bottom: 120px;
+    }
+
+    .localCard {
+        width: 100%;
+    }
+
+    .localVideo {
+        max-height: 40vh;
+    }
+
+    .remoteItem {
+        width: 100%;
+    }
+
+    .smallSelfVideo {
+        top: 80px;
+        right: 10px;
+    }
+
+    .smallSelfCard {
+        width: 140px;
+    }
+
+    .smallVideo {
+        height: 90px;
+    }
+
+    .screenShareVideo {
+        max-height: 50vh;
+    }
+}
+
+/* ================= FULLSCREEN FIX (MAIN PART) ================= */
+
+.localBlock:fullscreen {
+    width: 100vw;
+    height: 100vh;
+    background: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Chrome / Safari */
+.localBlock:-webkit-full-screen {
+    width: 100vw;
+    height: 100vh;
+    background: black;
+}
+
+/* FIX CARD INSIDE FULLSCREEN */
+.localBlock:fullscreen .localCard {
+    width: 100vw !important;
+    height: 100vh !important;
+    max-width: 100vw !important;
+    border-radius: 0 !important;
+}
+
+/* FIX VIDEO INSIDE FULLSCREEN */
+.localBlock:fullscreen .localVideo {
+    width: 100vw !important;
+    height: 100vh !important;
+    max-height: 100vh !important;
+    object-fit: cover !important;
+}
+
+/* HEADER ON TOP */
+.localBlock:fullscreen .videoHeader {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 9999;
+}
+
+.remoteUserName{
+    color: white !important;
+}

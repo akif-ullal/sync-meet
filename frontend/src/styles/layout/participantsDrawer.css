@@ -1,0 +1,14 @@
+.participantsDrawerBox {
+    width: 250px;
+    padding: 16px;
+}
+
+.participantsTitle {
+    font-weight: 600;
+}
+
+.participantItem {
+    margin-top: 16px;
+    font-size: 15px;
+}
+
