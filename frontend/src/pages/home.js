@@ -41,6 +41,19 @@ const Home = () => {
             navigate(`/room/${roomId}`);
         } catch (error) {
             console.log("ERROR:", error);
+
+            if (error.response?.status === 401) {
+
+                localStorage.removeItem("token");
+
+                localStorage.removeItem("username");
+
+                alert("Session expired. Please login again.");
+
+                navigate("/login");
+
+                return;
+            }
             alert("Failed to create meeting");
         }
     };

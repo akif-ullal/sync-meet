@@ -2,8 +2,11 @@ import {
     Drawer,
     Box,
     Typography,
-    Button
+    Button,
+    IconButton
 } from "@mui/material";
+
+import CloseIcon from "@mui/icons-material/Close";
 
 import "../../styles/layout/inviteDrawer.css";
 
@@ -53,11 +56,26 @@ const InviteDrawer = ({
 
             <Box className="inviteDrawer">
 
-                <Typography
-                    variant="h6"
-                >
-                    Invite Users
-                </Typography>
+                {/* HEADER */}
+
+                <Box className="inviteHeader">
+
+                    <IconButton
+                        onClick={() =>
+                            setInviteOpen(false)
+                        }
+                    >
+                        <CloseIcon />
+                    </IconButton>
+
+                    <Typography variant="h6">
+
+                        Invite Users
+
+                    </Typography>
+
+                </Box>
+
 
                 {/* ROOM ID */}
 
@@ -75,12 +93,14 @@ const InviteDrawer = ({
 
                 <Button
                     variant="contained"
+
                     onClick={copyRoomId}
                 >
                     Copy ID
                 </Button>
 
-                {/* LINK */}
+
+                {/* MEETING LINK */}
 
                 <Typography
                     className="inviteLabel"
@@ -96,6 +116,7 @@ const InviteDrawer = ({
 
                 <Button
                     variant="contained"
+
                     onClick={copyMeetingLink}
                 >
                     Copy Link

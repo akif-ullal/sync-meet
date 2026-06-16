@@ -7,6 +7,12 @@ const protect = async (req, res, next) => {
 
     try {
 
+        console.log(
+            "AUTH HEADER:",
+            req.headers.authorization
+        );
+
+
         // check token exists
         if (
             req.headers.authorization &&
@@ -36,6 +42,11 @@ const protect = async (req, res, next) => {
         }
 
     } catch (error) {
+
+        console.log(
+        "AUTH ERROR:",
+        error.message
+    );
 
         return res.status(401).json({
             message: "Invalid token"

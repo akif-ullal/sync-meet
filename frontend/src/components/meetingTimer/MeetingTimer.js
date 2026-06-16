@@ -4,6 +4,8 @@ from "../../hooks/useMeetingTimer";
 import formatTime
 from "../../utils/formatTime";
 
+import "../../styles/layout/meetingTimer.css";
+
 const MeetingTimer = () => {
 
     const seconds =
@@ -11,12 +13,26 @@ const MeetingTimer = () => {
 
     return (
 
-        <h2>
-            Meeting Time:
-            {
-                formatTime(seconds)
-            }
-        </h2>
+        <div className="mainMeetingTimer">
+            <div className="meetingTimer">
+
+                <h2 className="meetingTimerText">
+
+                    Meeting Time:
+
+                    <span>
+
+                        {formatTime(seconds)}
+
+                    </span>
+
+                </h2>
+
+            </div>
+
+        </div>
+
+        
     );
 };
 

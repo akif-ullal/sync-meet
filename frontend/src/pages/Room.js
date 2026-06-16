@@ -148,6 +148,17 @@ const Room = () => {
         ]
     };
 
+    useEffect(() => {
+
+        console.log("ROOM MOUNTED");
+
+        return () => {
+
+            console.log("ROOM UNMOUNTED");
+        };
+
+    }, []);
+
 
     // ================= INITIAL CONNECTION =================
 

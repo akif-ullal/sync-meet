@@ -1,19 +1,35 @@
 .inviteDrawer {
+
     width: 320px;
 
     padding: 20px;
 
     display: flex;
+
     flex-direction: column;
 
     gap: 15px;
 }
 
+
+.inviteHeader {
+
+    display: flex;
+
+    align-items: center;
+
+    margin-bottom: 10px;
+}
+
+
 .inviteLabel {
+
     font-weight: bold;
 }
 
+
 .inviteValue {
+
     background: #f1f5f9;
 
     padding: 10px;
