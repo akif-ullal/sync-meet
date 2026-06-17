@@ -9,137 +9,81 @@ export const createPeerConnection = ({
     servers
 }) => {
 
-    // If already exists, return existing connection
+    // already exists
     if (peerConnections.current[socketId]) {
         return peerConnections.current[socketId];
     }
 
-    console.log("Creating Peer Connection For:", socketId);
+    console.log("Creating Peer Connection For:",socketId);
 
     const pc = new RTCPeerConnection(servers);
 
     // store connection
     peerConnections.current[socketId] = pc;
 
-    // store metadata
     peerMeta.current[socketId] = {
-        userId
+        userId: userId
     };
+    
+    // add local tracks
+    localStream.current
+        .getTracks()
+        .forEach((track) => {
 
-    // ================================
-    // ADD LOCAL STREAM TRACKS
-    // ================================
-    if (localStream.current) {
-        localStream.current.getTracks().forEach((track) => {
-            pc.addTrack(track, localStream.current);
+            pc.addTrack(
+                track,
+                localStream.current
+            );
         });
-    }
 
-    // ================================
-    // RECEIVE REMOTE STREAM
-    // ================================
+    // receive remote stream
     pc.ontrack = (event) => {
 
-        const remoteUserId =
-            peerMeta.current[socketId]?.userId;
+        const userId = peerMeta.current[socketId]?.userId;
 
-        console.log("Remote Stream Received from:", socketId);
+        console.log("Remote Stream Received");
 
         setRemoteStreams((prev) => {
 
-            // IMPORTANT: always replace stream (fix mobile freeze issue)
-            const filtered = prev.filter(
-                (item) => item.socketId !== socketId
-            );
+            const alreadyExists =prev.find((item) =>
+                        item.socketId === socketId
+                );
+
+            if (alreadyExists) {
+                return prev;
+            }
 
             return [
-                ...filtered,
+                ...prev,
                 {
                     socketId,
                     stream: event.streams[0],
-                    userId: remoteUserId
+                    userId 
                 }
             ];
         });
     };
 
-    // ================================
-    // ICE CANDIDATE
-    // ================================
+    // send ICE candidate
     pc.onicecandidate = (event) => {
 
         if (event.candidate) {
 
-            socketRef.current.emit("ice-candidate", {
-                candidate: event.candidate,
-                to: socketId
-            });
+            socketRef.current.emit(
+                "ice-candidate",
+                {
+                    candidate: event.candidate,
+                    to: socketId
+                }
+            );
         }
     };
 
-    // ================================
-    // CONNECTION STATE DEBUG + RECOVERY
-    // ================================
+    // connection state
     pc.onconnectionstatechange = () => {
 
-        console.log(
-            "CONNECTION STATE:",
-            socketId,
-            pc.connectionState
-        );
+        console.log("Connection State:",pc.connectionState);
     };
-
-    pc.oniceconnectionstatechange = () => {
-
-        console.log(
-            "ICE STATE:",
-            socketId,
-            pc.iceConnectionState
-        );
-
-        // Try recovery on mobile network drop
-        if (
-            pc.iceConnectionState === "disconnected" ||
-            pc.iceConnectionState === "failed"
-        ) {
-
-            console.log(
-                "ICE restart triggered for:",
-                socketId
-            );
-
-            try {
-                pc.restartIce?.();
-            } catch (err) {
-                console.log("ICE restart error:", err);
-            }
-        }
-    };
-
-    // ================================
-    // OPTIONAL DEBUG STATS (remove in production)
-    // ================================
-    setInterval(() => {
-
-        if (!peerConnections.current[socketId]) return;
-
-        pc.getStats().then((stats) => {
-
-            stats.forEach((report) => {
-
-                if (report.type === "inbound-rtp") {
-
-                    console.log(
-                        "PACKET LOSS:",
-                        socketId,
-                        report.packetsLost
-                    );
-                }
-            });
-
-        });
-
-    }, 10000);
 
     return pc;
 };
