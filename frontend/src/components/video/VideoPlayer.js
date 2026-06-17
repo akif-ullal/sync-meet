@@ -13,6 +13,7 @@ const VideoPlayer = ({
 
     useEffect(() => {
 
+        // ADD STREAM
         if (
             videoRef.current &&
             stream
@@ -22,20 +23,43 @@ const VideoPlayer = ({
                 stream;
         }
 
+        // CLEANUP
+        return () => {
+
+            if (videoRef.current) {
+
+                if (
+                    videoRef.current.srcObject
+                ) {
+
+                    videoRef.current
+                        .srcObject
+                        .getTracks()
+                        .forEach((track) => {
+
+                            track.stop();
+                        });
+                }
+
+                videoRef.current.pause();
+
+                videoRef.current.srcObject =
+                    null;
+
+                videoRef.current.load();
+            }
+        };
+
     }, [stream]);
 
     return (
 
         <video
             ref={videoRef}
-
             autoPlay
-
             playsInline
-
             className="videoPlayer"
         />
-
     );
 };
 
