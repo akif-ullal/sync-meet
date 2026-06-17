@@ -31,7 +31,7 @@ const InviteDrawer = ({
             roomId
         );
 
-        alert("Meeting ID Copied");
+        // alert("Meeting ID Copied");
     };
 
     // COPY LINK
@@ -41,7 +41,7 @@ const InviteDrawer = ({
             meetingLink
         );
 
-        alert("Meeting Link Copied");
+        // alert("Meeting Link Copied");
     };
 
     return (
