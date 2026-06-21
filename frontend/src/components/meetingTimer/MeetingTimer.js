@@ -18,7 +18,7 @@ const MeetingTimer = () => {
 
                 <h2 className="meetingTimerText">
 
-                    Meeting Time:
+                    Meeting Time :
 
                     <span>
 
