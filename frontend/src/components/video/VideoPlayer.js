@@ -9,45 +9,32 @@ const VideoPlayer = ({
     stream
 }) => {
 
-    const videoRef = useRef();
+    const videoRef = useRef(null);
 
     useEffect(() => {
 
-        // ADD STREAM
+        const video =
+            videoRef.current;
+
         if (
-            videoRef.current &&
+            video &&
             stream
         ) {
 
-            videoRef.current.srcObject =
+            video.srcObject =
                 stream;
         }
 
-        // CLEANUP
         return () => {
 
-            if (videoRef.current) {
+            if (video) {
 
-                if (
-                    videoRef.current.srcObject
-                ) {
+                video.pause();
 
-                    videoRef.current
-                        .srcObject
-                        .getTracks()
-                        .forEach((track) => {
-
-                            track.stop();
-                        });
-                }
-
-                videoRef.current.pause();
-
-                videoRef.current.srcObject =
+                video.srcObject =
                     null;
-
-                videoRef.current.load();
             }
+
         };
 
     }, [stream]);
@@ -55,12 +42,19 @@ const VideoPlayer = ({
     return (
 
         <video
+
             ref={videoRef}
+
             autoPlay
+
             playsInline
+
             className="videoPlayer"
+
         />
+
     );
+
 };
 
 export default VideoPlayer;
