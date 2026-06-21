@@ -16,9 +16,7 @@ import { Box } from "@mui/material";
 
 // SOCKETS
 import { registerSocketEvents } from "../socket/socketHandlers";
-
 import { registerChatEvents } from "../socket/chatHandlers";
-
 import { sendMessage } from "../socket/sendMessage";
 
 // WEBRTC
@@ -59,8 +57,10 @@ const servers = {
     iceServers: [
 
         {
+
             urls:
                 "stun:stun.l.google.com:19302"
+
         }
 
     ]
@@ -70,137 +70,180 @@ const servers = {
 
 const Room = () => {
 
-    const { roomId } = useParams();
+    const { roomId } =
+        useParams();
 
-    const navigate = useNavigate();
+    const navigate =
+        useNavigate();
 
 
     // ================= REFS =================
 
-    const localVideoRef = useRef();
+    const localVideoRef =
+        useRef();
 
-    const socketRef = useRef();
+    const socketRef =
+        useRef();
 
-    const localStream = useRef();
+    const localStream =
+        useRef();
 
-    const peerConnections = useRef({});
+    const peerConnections =
+        useRef({});
 
-    const peerMeta = useRef({});
+    const peerMeta =
+        useRef({});
 
 
     // ================= STATE =================
 
-    const [localMediaStream, setLocalMediaStream] =
+    const [localMediaStream,
+        setLocalMediaStream] =
         useState(null);
 
-    const [remoteStreams, setRemoteStreams] =
+    const [remoteStreams,
+        setRemoteStreams] =
         useState([]);
 
-    const [isMuted, setIsMuted] =
+    const [isMuted,
+        setIsMuted] =
         useState(false);
 
-    const [isVideoOff, setIsVideoOff] =
+    const [isVideoOff,
+        setIsVideoOff] =
         useState(false);
 
-    const [isScreenSharing, setIsScreenSharing] =
+    const [isScreenSharing,
+        setIsScreenSharing] =
         useState(false);
 
-    const [message, setMessage] =
+    const [message,
+        setMessage] =
         useState("");
 
-    const [chat, setChat] =
+    const [chat,
+        setChat] =
         useState([]);
 
-    const [participants, setParticipants] =
+    const [participants,
+        setParticipants] =
         useState([]);
 
-    const [chatOpen, setChatOpen] =
+    const [chatOpen,
+        setChatOpen] =
         useState(false);
 
-    const [participantsOpen, setParticipantsOpen] =
+    const [participantsOpen,
+        setParticipantsOpen] =
         useState(false);
 
-    const [inviteOpen, setInviteOpen] =
+    const [inviteOpen,
+        setInviteOpen] =
         useState(false);
 
 
     // ================= START CAMERA =================
 
-    const startVideo = async () => {
+    const startVideo =
+        useCallback(async () => {
 
-        try {
+            try {
 
-            const stream =
-                await navigator.mediaDevices
-                    .getUserMedia({
+                const stream =
 
-                        video: true,
+                    await navigator
+                        .mediaDevices
+                        .getUserMedia({
 
-                        audio: true
+                            video: true,
 
-                    });
+                            audio: true
 
-            console.log(
-                "LOCAL STREAM READY:",
-                stream
-            );
+                        });
 
-            localStream.current =
-                stream;
+                console.log(
 
-            setLocalMediaStream(
-                stream
-            );
+                    "LOCAL STREAM READY:",
 
-            return stream;
+                    stream
 
-        } catch (error) {
+                );
 
-            console.log(
-                "getUserMedia error:",
-                error
-            );
+                localStream.current =
+                    stream;
 
-            return null;
-        }
-    };
+                setLocalMediaStream(
+                    stream
+                );
+
+                return stream;
+
+            }
+
+            catch (error) {
+
+                console.log(
+
+                    "getUserMedia error:",
+
+                    error
+
+                );
+
+                return null;
+            }
+
+        }, []);
 
 
     // ================= JOIN ROOM =================
 
-    const joinRoom = () => {
+    const joinRoom =
+        useCallback(() => {
 
-        socketRef.current.emit(
+            if (
+                !socketRef.current
+            ) {
 
-            "join-room",
-
-            {
-
-                roomId,
-
-                userId:
-                    localStorage.getItem(
-                        "username"
-                    )
-
+                return;
             }
 
-        );
-    };
+            socketRef.current.emit(
+
+                "join-room",
+
+                {
+
+                    roomId,
+
+                    userId:
+                        localStorage.getItem(
+                            "username"
+                        )
+
+                }
+
+            );
+
+        }, [roomId]);
 
 
     // ================= INIT =================
 
     const initMediaAndJoin =
+
         useCallback(async () => {
 
             const stream =
+
                 await startVideo();
 
             if (!stream) {
 
                 alert(
+
                     "Camera/Mic permission required"
+
                 );
 
                 return;
@@ -211,6 +254,7 @@ const Room = () => {
                 .forEach((track) => {
 
                     track.enabled = true;
+
                 });
 
             stream
@@ -218,11 +262,22 @@ const Room = () => {
                 .forEach((track) => {
 
                     track.enabled = true;
+
                 });
 
             joinRoom();
 
-        }, [roomId]);
+        },
+
+            [
+
+                startVideo,
+
+                joinRoom
+
+            ]
+
+        );
 
 
     // ================= SOCKET INIT =================
@@ -248,6 +303,7 @@ const Room = () => {
                 );
 
                 await initMediaAndJoin();
+
             }
 
         );
@@ -281,18 +337,21 @@ const Room = () => {
         });
 
 
+        const currentPeerConnections =
+
+            peerConnections.current;
+
+
         return () => {
 
-            const currentSocket =
-                socketRef.current;
+            if (
 
-            const currentPeerConnections =
-                peerConnections.current;
+                socketRef.current
 
+            ) {
 
-            if (currentSocket) {
+                socketRef.current.disconnect();
 
-                currentSocket.disconnect();
             }
 
 
@@ -324,7 +383,9 @@ const Room = () => {
         ) {
 
             localVideoRef.current.srcObject =
+
                 localMediaStream;
+
         }
 
     }, [localMediaStream]);
@@ -353,11 +414,15 @@ const Room = () => {
             <VideoGrid
 
                 localStream={
+
                     localMediaStream
+
                 }
 
                 remoteStreams={
+
                     remoteStreams
+
                 }
 
             />
@@ -370,7 +435,9 @@ const Room = () => {
                 isVideoOff={isVideoOff}
 
                 isScreenSharing={
+
                     isScreenSharing
+
                 }
 
                 toggleAudio={() =>
@@ -452,15 +519,21 @@ const Room = () => {
                 }
 
                 openChat={() =>
+
                     setChatOpen(true)
+
                 }
 
                 openParticipants={() =>
+
                     setParticipantsOpen(true)
+
                 }
 
                 openInvite={() =>
+
                     setInviteOpen(true)
+
                 }
 
             />
@@ -471,7 +544,9 @@ const Room = () => {
                 chatOpen={chatOpen}
 
                 setChatOpen={
+
                     setChatOpen
+
                 }
 
                 chat={chat}
@@ -479,7 +554,9 @@ const Room = () => {
                 message={message}
 
                 setMessage={
+
                     setMessage
+
                 }
 
                 sendMessage={() =>
@@ -504,15 +581,21 @@ const Room = () => {
             <ParticipantsDrawer
 
                 participantsOpen={
+
                     participantsOpen
+
                 }
 
                 setParticipantsOpen={
+
                     setParticipantsOpen
+
                 }
 
                 participants={
+
                     participants
+
                 }
 
             />
@@ -521,11 +604,15 @@ const Room = () => {
             <InviteDrawer
 
                 inviteOpen={
+
                     inviteOpen
+
                 }
 
                 setInviteOpen={
+
                     setInviteOpen
+
                 }
 
                 roomId={roomId}
@@ -535,6 +622,7 @@ const Room = () => {
         </Box>
 
     );
+
 };
 
 export default Room;
