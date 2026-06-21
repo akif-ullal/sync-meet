@@ -9,7 +9,6 @@ import Login from "./Login";
 
 import { loginUser } from "../api/auth";
 
-
 // MOCK API
 jest.mock("../api/auth");
 
@@ -29,6 +28,8 @@ jest.mock("react-router-dom", () => ({
 describe("Login Page", () => {
 
   beforeEach(() => {
+    
+    window.alert = jest.fn();
 
     localStorage.clear();
 
