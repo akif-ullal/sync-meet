@@ -310,12 +310,6 @@ Every push to the **main** branch automatically:
 
 **Abdurrahman Akif**
 
-GitHub: https://github.com/YOUR_GITHUB_USERNAME
-
-LinkedIn: https://linkedin.com/in/YOUR_LINKEDIN_PROFILE
+LinkedIn: https://www.linkedin.com/in/ar-akif/
 
 ---
-
-# 📄 License
-
-This project is licensed under the MIT License.
